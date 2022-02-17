@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_Telemetry_ShopAppsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+          <Property Name="id_User" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="1000" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="RevID" />
+          </Key>
+          <Property Name="RevID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bylogin" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="id_App" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAppsBOBApps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Icon" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ImagePreview1" Type="varchar" MaxLength="200" />
+          <Property Name="ImagePreview2" Type="varchar" MaxLength="200" />
+          <Property Name="ImagePreview3" Type="varchar" MaxLength="200" />
+          <Property Name="ImageShortcut" Type="varchar" MaxLength="200" />
+          <Property Name="AppURL" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="id_Category" Type="int" />
+          <Property Name="counterInstall" Type="int" />
+          <Property Name="rate" Type="decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="CoutRated" Type="int" Nullable="false" />
+          <Property Name="SumAllRate" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAppsBOBCategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUsersM2MUserApps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_User" Type="int" Nullable="false" />
+          <Property Name="id_App" Type="int" Nullable="false" />
+          <Property Name="IsUserRated" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastReadedNewsID" Type="int" />
+          <Property Name="LastReadedMessageID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Messages_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAppsBOBApps_tblAppsBOBCategories">
+          <End Role="tblAppsBOBCategories" Type="Self.tblAppsBOBCategories" Multiplicity="0..1" />
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblAppsBOBApps">
+              <PropertyRef Name="id_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblAppsBOBApp_tblUsersM2MUserApp">
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="1" />
+          <End Role="tblUsersM2MUserApps" Type="Self.tblUsersM2MUserApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBApps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersM2MUserApps">
+              <PropertyRef Name="id_App" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblAppsBOBCategory_tblAppsBOBApp">
+          <End Role="tblAppsBOBCategories" Type="Self.tblAppsBOBCategories" Multiplicity="0..1" />
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblAppsBOBApps">
+              <PropertyRef Name="id_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_tblUsersM2MUserApp">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="tblUsersM2MUserApps" Type="Self.tblUsersM2MUserApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersM2MUserApps">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_Telemetry_ShopAppsModelStoreContainer">
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAppsBOBApps" EntityType="Self.tblAppsBOBApps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAppsBOBCategories" EntityType="Self.tblAppsBOBCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsersM2MUserApps" EntityType="Self.tblUsersM2MUserApps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAppsBOBApps_tblAppsBOBCategories" Association="Self.FK_tblAppsBOBApps_tblAppsBOBCategories">
+            <End Role="tblAppsBOBCategories" EntitySet="tblAppsBOBCategories" />
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+          </AssociationSet>
+          <AssociationSet Name="tblAppsBOBApp_tblUsersM2MUserApp" Association="Self.tblAppsBOBApp_tblUsersM2MUserApp">
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+            <End Role="tblUsersM2MUserApps" EntitySet="tblUsersM2MUserApps" />
+          </AssociationSet>
+          <AssociationSet Name="tblAppsBOBCategory_tblAppsBOBApp" Association="Self.tblAppsBOBCategory_tblAppsBOBApp">
+            <End Role="tblAppsBOBCategories" EntitySet="tblAppsBOBCategories" />
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+          </AssociationSet>
+          <AssociationSet Name="User_tblUsersM2MUserApp" Association="Self.User_tblUsersM2MUserApp">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="tblUsersM2MUserApps" EntitySet="tblUsersM2MUserApps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_Telemetry_ShopAppsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_User" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Messages_Users" FromRole="Messages" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="RevID" />
+          </Key>
+          <Property Name="RevID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bylogin" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_App" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAppsBOBApps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImagePreview1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePreview2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePreview3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImageShortcut" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AppURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_Category" Type="Int32" />
+          <Property Name="counterInstall" Type="Int32" />
+          <Property Name="rate" Type="Decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="CoutRated" Type="Int32" Nullable="false" />
+          <Property Name="SumAllRate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblAppsBOBCategories" Relationship="Self.FK_tblAppsBOBApps_tblAppsBOBCategories" FromRole="tblAppsBOBApps" ToRole="tblAppsBOBCategories" />
+          <NavigationProperty Name="tblUsersM2MUserApps" Relationship="Self.tblAppsBOBApp_tblUsersM2MUserApp" FromRole="tblAppsBOBApps" ToRole="tblUsersM2MUserApps" />
+          <NavigationProperty Name="tblAppsBOBCategories1" Relationship="Self.tblAppsBOBCategory_tblAppsBOBApp" FromRole="tblAppsBOBApps" ToRole="tblAppsBOBCategories" />
+        </EntityType>
+        <EntityType Name="tblAppsBOBCategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblAppsBOBApps" Relationship="Self.FK_tblAppsBOBApps_tblAppsBOBCategories" FromRole="tblAppsBOBCategories" ToRole="tblAppsBOBApps" />
+          <NavigationProperty Name="tblAppsBOBApps1" Relationship="Self.tblAppsBOBCategory_tblAppsBOBApp" FromRole="tblAppsBOBCategories" ToRole="tblAppsBOBApps" />
+        </EntityType>
+        <EntityType Name="tblUsersM2MUserApps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_User" Type="Int32" Nullable="false" />
+          <Property Name="id_App" Type="Int32" Nullable="false" />
+          <Property Name="IsUserRated" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblAppsBOBApps" Relationship="Self.tblAppsBOBApp_tblUsersM2MUserApp" FromRole="tblUsersM2MUserApps" ToRole="tblAppsBOBApps" />
+          <NavigationProperty Name="Users" Relationship="Self.User_tblUsersM2MUserApp" FromRole="tblUsersM2MUserApps" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastReadedNewsID" Type="Int32" />
+          <Property Name="LastReadedMessageID" Type="Int32" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Users" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="tblUsersM2MUserApps" Relationship="Self.User_tblUsersM2MUserApp" FromRole="Users" ToRole="tblUsersM2MUserApps" />
+        </EntityType>
+        <Association Name="FK_Messages_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAppsBOBApps_tblAppsBOBCategories">
+          <End Role="tblAppsBOBCategories" Type="Self.tblAppsBOBCategories" Multiplicity="0..1" />
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblAppsBOBApps">
+              <PropertyRef Name="id_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblAppsBOBApp_tblUsersM2MUserApp">
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="1" />
+          <End Role="tblUsersM2MUserApps" Type="Self.tblUsersM2MUserApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBApps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersM2MUserApps">
+              <PropertyRef Name="id_App" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblAppsBOBCategory_tblAppsBOBApp">
+          <End Role="tblAppsBOBCategories" Type="Self.tblAppsBOBCategories" Multiplicity="0..1" />
+          <End Role="tblAppsBOBApps" Type="Self.tblAppsBOBApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAppsBOBCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblAppsBOBApps">
+              <PropertyRef Name="id_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_tblUsersM2MUserApp">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="tblUsersM2MUserApps" Type="Self.tblUsersM2MUserApps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersM2MUserApps">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_Telemetry_ShopAppsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="Self.Messages" />
+          <EntitySet Name="News" EntityType="Self.News" />
+          <EntitySet Name="Review" EntityType="Self.Review" />
+          <EntitySet Name="tblAppsBOBApps" EntityType="Self.tblAppsBOBApps" />
+          <EntitySet Name="tblAppsBOBCategories" EntityType="Self.tblAppsBOBCategories" />
+          <EntitySet Name="tblUsersM2MUserApps" EntityType="Self.tblUsersM2MUserApps" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAppsBOBApps_tblAppsBOBCategories" Association="Self.FK_tblAppsBOBApps_tblAppsBOBCategories">
+            <End Role="tblAppsBOBCategories" EntitySet="tblAppsBOBCategories" />
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+          </AssociationSet>
+          <AssociationSet Name="tblAppsBOBApp_tblUsersM2MUserApp" Association="Self.tblAppsBOBApp_tblUsersM2MUserApp">
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+            <End Role="tblUsersM2MUserApps" EntitySet="tblUsersM2MUserApps" />
+          </AssociationSet>
+          <AssociationSet Name="tblAppsBOBCategory_tblAppsBOBApp" Association="Self.tblAppsBOBCategory_tblAppsBOBApp">
+            <End Role="tblAppsBOBCategories" EntitySet="tblAppsBOBCategories" />
+            <End Role="tblAppsBOBApps" EntitySet="tblAppsBOBApps" />
+          </AssociationSet>
+          <AssociationSet Name="User_tblUsersM2MUserApp" Association="Self.User_tblUsersM2MUserApp">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="tblUsersM2MUserApps" EntitySet="tblUsersM2MUserApps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_Telemetry_ShopAppsModelStoreContainer" CdmEntityContainer="DB_Telemetry_ShopAppsEntities">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Review">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="RevID" ColumnName="RevID" />
+                <ScalarProperty Name="bylogin" ColumnName="bylogin" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="id_App" ColumnName="id_App" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAppsBOBApps">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.tblAppsBOBApps">
+              <MappingFragment StoreEntitySet="tblAppsBOBApps">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="ImagePreview1" ColumnName="ImagePreview1" />
+                <ScalarProperty Name="ImagePreview2" ColumnName="ImagePreview2" />
+                <ScalarProperty Name="ImagePreview3" ColumnName="ImagePreview3" />
+                <ScalarProperty Name="ImageShortcut" ColumnName="ImageShortcut" />
+                <ScalarProperty Name="AppURL" ColumnName="AppURL" />
+                <ScalarProperty Name="id_Category" ColumnName="id_Category" />
+                <ScalarProperty Name="counterInstall" ColumnName="counterInstall" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="CoutRated" ColumnName="CoutRated" />
+                <ScalarProperty Name="SumAllRate" ColumnName="SumAllRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAppsBOBCategories">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.tblAppsBOBCategories">
+              <MappingFragment StoreEntitySet="tblAppsBOBCategories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsersM2MUserApps">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.tblUsersM2MUserApps">
+              <MappingFragment StoreEntitySet="tblUsersM2MUserApps">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="id_App" ColumnName="id_App" />
+                <ScalarProperty Name="IsUserRated" ColumnName="IsUserRated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_Telemetry_ShopAppsModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="LastReadedNewsID" ColumnName="LastReadedNewsID" />
+                <ScalarProperty Name="LastReadedMessageID" ColumnName="LastReadedMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

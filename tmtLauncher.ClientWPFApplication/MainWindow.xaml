@@ -1,0 +1,12 @@
+﻿<Window x:Class="tmtLauncher.ClientWPFApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view="clr-namespace:tmtLauncher.ClientWPFApplication.View"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid x:Name="rootGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <Menu x:Name="MainMenu" Height="20px" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <MenuItem x:Name="miRegisterNewUser" Header="Регистрация" Click="miRegisterNewUser_Click" />
+        </Menu>
+
+    </Grid>
+</Window>

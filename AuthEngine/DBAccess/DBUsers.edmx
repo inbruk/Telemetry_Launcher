@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_Telemetry_UsersModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DB_Telemetry_UsersModelStoreContainer">
+          <EntitySet Name="tblCompanyBOBCompany" EntityType="DB_Telemetry_UsersModel.Store.tblCompanyBOBCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblCompanyBOBPayments" EntityType="DB_Telemetry_UsersModel.Store.tblCompanyBOBPayments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUsersBOBUsers" EntityType="DB_Telemetry_UsersModel.Store.tblUsersBOBUsers" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="tblCompanyBOBCompany_tblCompanyBOBPayment" Association="DB_Telemetry_UsersModel.Store.tblCompanyBOBCompany_tblCompanyBOBPayment">
+            <End Role="tblCompanyBOBCompany" EntitySet="tblCompanyBOBCompany" />
+            <End Role="tblCompanyBOBPayments" EntitySet="tblCompanyBOBPayments" />
+          </AssociationSet>
+          <AssociationSet Name="tblCompanyBOBCompany_tblUsersBOBUser" Association="DB_Telemetry_UsersModel.Store.tblCompanyBOBCompany_tblUsersBOBUser">
+            <End Role="tblCompanyBOBCompany" EntitySet="tblCompanyBOBCompany" />
+            <End Role="tblUsersBOBUsers" EntitySet="tblUsersBOBUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblCompanyBOBCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="Adress" Type="varchar" MaxLength="400" />
+          <Property Name="CurrentBalance" Type="money" Nullable="false" />
+          <Property Name="CompanyUID" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tblCompanyBOBPayments">
+          <Key>
+            <PropertyRef Name="DateMessage" />
+          </Key>
+          <Property Name="DateMessage" Type="datetime" Nullable="false" />
+          <Property Name="id_Company" Type="int" Nullable="false" />
+          <Property Name="MoneyMove" Type="money" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tblUsersBOBUsers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="Login" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="Solt" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="Mail" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="Phone" Type="varchar" MaxLength="200" />
+          <Property Name="id_Company" Type="int" Nullable="false" />
+          <Property Name="Password1" Type="varchar(max)" Nullable="false" />
+          <Property Name="GUID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="isAdmin" Type="bit" Nullable="false" />
+          <Property Name="isSubmit" Type="bit" Nullable="false" />
+          <Property Name="isCompanyAdmin" Type="bit" />
+        </EntityType>
+        <Association Name="tblCompanyBOBCompany_tblCompanyBOBPayment">
+          <End Role="tblCompanyBOBCompany" Type="DB_Telemetry_UsersModel.Store.tblCompanyBOBCompany" Multiplicity="1" />
+          <End Role="tblCompanyBOBPayments" Type="DB_Telemetry_UsersModel.Store.tblCompanyBOBPayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBOBCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblCompanyBOBPayments">
+              <PropertyRef Name="id_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblCompanyBOBCompany_tblUsersBOBUser">
+          <End Role="tblCompanyBOBCompany" Type="DB_Telemetry_UsersModel.Store.tblCompanyBOBCompany" Multiplicity="1" />
+          <End Role="tblUsersBOBUsers" Type="DB_Telemetry_UsersModel.Store.tblUsersBOBUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBOBCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersBOBUsers">
+              <PropertyRef Name="id_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_Telemetry_UsersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DB_Telemetry_UsersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCompanyBOBCompany" EntityType="DB_Telemetry_UsersModel.tblCompanyBOBCompany" />
+          <EntitySet Name="tblUsersBOBUsers" EntityType="DB_Telemetry_UsersModel.tblUsersBOBUsers" />
+          <AssociationSet Name="tblCompanyBOBCompany_tblUsersBOBUser" Association="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblUsersBOBUser">
+            <End Role="tblCompanyBOBCompany" EntitySet="tblCompanyBOBCompany" />
+            <End Role="tblUsersBOBUsers" EntitySet="tblUsersBOBUsers" />
+          </AssociationSet>
+          <EntitySet Name="tblCompanyBOBPayments" EntityType="DB_Telemetry_UsersModel.tblCompanyBOBPayments" />
+          <AssociationSet Name="tblCompanyBOBCompany_tblCompanyBOBPayment" Association="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblCompanyBOBPayment">
+            <End Role="tblCompanyBOBCompany" EntitySet="tblCompanyBOBCompany" />
+            <End Role="tblCompanyBOBPayments" EntitySet="tblCompanyBOBPayments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblCompanyBOBCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Adress" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="CurrentBalance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="CompanyUID" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUsersBOBUsers" Relationship="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblUsersBOBUser" FromRole="tblCompanyBOBCompany" ToRole="tblUsersBOBUsers" />
+          <NavigationProperty Name="tblCompanyBOBPayments" Relationship="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblCompanyBOBPayment" FromRole="tblCompanyBOBCompany" ToRole="tblCompanyBOBPayments" />
+        </EntityType>
+        <EntityType Name="tblUsersBOBUsers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Login" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Solt" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Mail" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="id_Company" Nullable="false" />
+          <Property Type="String" Name="Password1" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GUID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="isAdmin" Nullable="false" />
+          <Property Type="Boolean" Name="isSubmit" Nullable="false" />
+          <Property Type="Boolean" Name="isCompanyAdmin" />
+          <NavigationProperty Name="tblCompanyBOBCompany" Relationship="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblUsersBOBUser" FromRole="tblUsersBOBUsers" ToRole="tblCompanyBOBCompany" />
+        </EntityType>
+        <Association Name="tblCompanyBOBCompany_tblUsersBOBUser">
+          <End Type="DB_Telemetry_UsersModel.tblCompanyBOBCompany" Role="tblCompanyBOBCompany" Multiplicity="1" />
+          <End Type="DB_Telemetry_UsersModel.tblUsersBOBUsers" Role="tblUsersBOBUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBOBCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsersBOBUsers">
+              <PropertyRef Name="id_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblCompanyBOBPayments">
+          <Key>
+            <PropertyRef Name="DateMessage" />
+          </Key>
+          <Property Type="DateTime" Name="DateMessage" Nullable="false" />
+          <Property Type="Int32" Name="id_Company" Nullable="false" />
+          <Property Type="Decimal" Name="MoneyMove" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblCompanyBOBCompany" Relationship="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblCompanyBOBPayment" FromRole="tblCompanyBOBPayments" ToRole="tblCompanyBOBCompany" />
+        </EntityType>
+        <Association Name="tblCompanyBOBCompany_tblCompanyBOBPayment">
+          <End Type="DB_Telemetry_UsersModel.tblCompanyBOBCompany" Role="tblCompanyBOBCompany" Multiplicity="1" />
+          <End Type="DB_Telemetry_UsersModel.tblCompanyBOBPayments" Role="tblCompanyBOBPayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBOBCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblCompanyBOBPayments">
+              <PropertyRef Name="id_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_Telemetry_UsersModelStoreContainer" CdmEntityContainer="DB_Telemetry_UsersEntities">
+          <EntitySetMapping Name="tblCompanyBOBCompany">
+            <EntityTypeMapping TypeName="DB_Telemetry_UsersModel.tblCompanyBOBCompany">
+              <MappingFragment StoreEntitySet="tblCompanyBOBCompany">
+                <ScalarProperty Name="CompanyUID" ColumnName="CompanyUID" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsersBOBUsers">
+            <EntityTypeMapping TypeName="DB_Telemetry_UsersModel.tblUsersBOBUsers">
+              <MappingFragment StoreEntitySet="tblUsersBOBUsers">
+                <ScalarProperty Name="isCompanyAdmin" ColumnName="isCompanyAdmin" />
+                <ScalarProperty Name="isSubmit" ColumnName="isSubmit" />
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Password1" ColumnName="Password1" />
+                <ScalarProperty Name="id_Company" ColumnName="id_Company" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Solt" ColumnName="Solt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCompanyBOBPayments">
+            <EntityTypeMapping TypeName="DB_Telemetry_UsersModel.tblCompanyBOBPayments">
+              <MappingFragment StoreEntitySet="tblCompanyBOBPayments">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="MoneyMove" ColumnName="MoneyMove" />
+                <ScalarProperty Name="id_Company" ColumnName="id_Company" />
+                <ScalarProperty Name="DateMessage" ColumnName="DateMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DBUsers">
+        <EntityTypeShape EntityType="DB_Telemetry_UsersModel.tblCompanyBOBCompany" Width="1.5" PointX="0.5" PointY="0.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="DB_Telemetry_UsersModel.tblUsersBOBUsers" Width="1.5" PointX="3" PointY="3.125" Height="3.7109993489583317" />
+        <AssociationConnector Association="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblUsersBOBUser" >
+          <ConnectorPoint PointX="2" PointY="0.59375" />
+          <ConnectorPoint PointX="4.40625" PointY="0.59375" />
+          <ConnectorPoint PointX="4.40625" PointY="3.125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DB_Telemetry_UsersModel.tblCompanyBOBPayments" Width="1.5" PointX="2.75" PointY="0.75" Height="1.9802864583333317" />
+        <AssociationConnector Association="DB_Telemetry_UsersModel.tblCompanyBOBCompany_tblCompanyBOBPayment" >
+          <ConnectorPoint PointX="2" PointY="1.7401432291666659" />
+          <ConnectorPoint PointX="2.75" PointY="1.7401432291666659" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

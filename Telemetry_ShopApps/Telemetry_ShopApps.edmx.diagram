@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="02d6488c3ec24f6c97870cce4973e14a" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.Messages" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.News" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.Review" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.tblAppsBOBApps" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.tblAppsBOBCategories" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.tblUsersM2MUserApps" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_Telemetry_ShopAppsModel.Users" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="DB_Telemetry_ShopAppsModel.FK_Messages_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_Telemetry_ShopAppsModel.FK_tblAppsBOBApps_tblAppsBOBCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_Telemetry_ShopAppsModel.tblAppsBOBApp_tblUsersM2MUserApp" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_Telemetry_ShopAppsModel.tblAppsBOBCategory_tblAppsBOBApp" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_Telemetry_ShopAppsModel.User_tblUsersM2MUserApp" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

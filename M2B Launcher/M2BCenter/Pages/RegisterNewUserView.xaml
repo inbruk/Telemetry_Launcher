@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="M2BCenter.Pages.RegisterNewUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d"         
+        xmlns:ViewModel="clr-namespace:M2BCenter.ViewModel"
+        Width="390" Height="410"
+>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="rootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="30px" />
+            <RowDefinition Height="50px" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" >Имя пользователя :</Label>
+        <TextBox x:Name="tbxName" Text="{ Binding Path=CurrRegInfo.Name, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="1" >Логин * :</Label>
+        <TextBox x:Name="tbxLogin" Text="{ Binding Path=CurrRegInfo.Login, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="2" >Пароль * :</Label>
+        <TextBox x:Name="tbxPassword" Text="{ Binding Path=CurrRegInfo.Password, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="3" >Пароль еще раз * :</Label>
+        <TextBox x:Name="tbxPasswordCheck" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="4" >E-mail * :</Label>
+        <TextBox x:Name="tbxEmail" Text="{ Binding Path=CurrRegInfo.Mail, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="5" >Телефон :</Label>
+        <TextBox x:Name="tbxPhone" Text="{ Binding Path=CurrRegInfo.Phone, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" 
+               HorizontalAlignment="Center" Margin="0 0 0 0" FontSize="12" 
+        > Информация о компании : </Label>
+
+        <Label Grid.Row="8" >Название :</Label>
+        <TextBox x:Name="tbxCompanyName" Text="{ Binding Path=CurrRegInfo.CompanyName, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+
+        <Label Grid.Row="9" >Адрес :</Label>
+        <TextBox x:Name="tbxCompanyAddress" Text="{ Binding Path=CurrRegInfo.CompanyAdress, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Stretch" Margin="10 5 10 5" />
+        
+        <Label Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 0 5 0" >
+            Поля помеченные звездочкой (*) обязательны для ввода
+        </Label>
+
+        <Button Name="btnRegister" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="2" 
+                Command="{Binding RegisterCommand}"
+        > Зарегистрировать нового пользователя </Button>
+
+    </Grid>
+</UserControl>
